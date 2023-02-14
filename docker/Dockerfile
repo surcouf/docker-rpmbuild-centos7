@@ -45,6 +45,7 @@ RUN mkdir -p /home/rpmbuilder/rpmbuild/{BUILD,SPECS,SOURCES,BUILDROOT,RPMS,SRPMS
 RUN chmod -R 777 /home/rpmbuilder/rpmbuild
 
 COPY .rpmmacros /home/rpmbuilder/
+RUN chown rpmbuilder:wheel /home/rpmbuilder/.rpmmacros
 USER rpmbuilder
 
 WORKDIR /home/rpmbuilder
