@@ -12,7 +12,7 @@ RUN sed -i 's/^mirrorlist=/#mirrorlist=/' /etc/yum.repos.d/CentOS-Base.repo \
 
 # Yum
 RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
-	&& yum localinstall -y https://yum.jc21.com/jc21-yum.rpm \
+#	&& yum localinstall -y https://yum.jc21.com/jc21-yum.rpm \
 	&& yum -y install deltarpm centos-release-scl \
 	&& yum-config-manager --enable rhel-server-rhscl-7-rpms
 RUN yum -y update \
@@ -42,10 +42,9 @@ RUN sed -i '/Defaults    requiretty/c\#Defaults    requiretty' /etc/sudoers
 # Rpm User
 RUN adduser -G wheel rpmbuilder
 RUN mkdir -p /home/rpmbuilder/rpmbuild/{BUILD,SPECS,SOURCES,BUILDROOT,RPMS,SRPMS,tmp}
-RUN chmod -R 777 /home/rpmbuilder/rpmbuild
 
 COPY .rpmmacros /home/rpmbuilder/
-RUN chown rpmbuilder:wheel /home/rpmbuilder/.rpmmacros
+RUN chown -R rpmbuilder:wheel /home/rpmbuilder/
 USER rpmbuilder
 
 WORKDIR /home/rpmbuilder
